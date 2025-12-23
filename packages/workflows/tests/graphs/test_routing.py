@@ -1,5 +1,5 @@
 from packages.workflows.src.chapter_graph import route_on_eval
-from packages.llm_rag.agents.states import ChapterState
+from packages.llm_rag.src.agents.states import ChapterState
 
 def test_route_on_eval_success():
     state: ChapterState = {"eval_score": 0.9, "iteration": 1}

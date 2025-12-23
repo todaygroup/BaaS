@@ -1,6 +1,6 @@
 from typing import TypedDict, List, Optional
 from langgraph.graph import StateGraph, END
-from packages.llm_rag.agents.states import ChapterState
+from packages.llm_rag.src.agents.states import ChapterState
 
 def research_node(state: ChapterState) -> ChapterState:
     """Research Agent Node skeleton."""

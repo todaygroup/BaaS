@@ -1,16 +1,18 @@
+from enum import Enum
 from typing import Literal, Dict, Any
 
-AgentRole = Literal[
-    "book_supervisor",
-    "outline_planner",
-    "research_agent",
-    "case_study_agent",
-    "chapter_writer",
-    "structure_consistency_agent",
-    "style_localization_agent",
-    "auto_critic",
-    "marketing_agent",
-]
+class Role(str, Enum):
+    SUPERVISOR = "book_supervisor"
+    PLANNER = "outline_planner"
+    RESEARCHER = "research_agent"
+    CASE_STUDY = "case_study_agent"
+    WRITER = "chapter_writer"
+    CONSISTENCY = "structure_consistency_agent"
+    STYLE = "style_localization_agent"
+    CRITIC = "auto_critic"
+    MARKETING = "marketing_agent"
+
+AgentRole = Role
 
 ROLE_MODEL_MAP: Dict[AgentRole, Dict[str, Any]] = {
     "book_supervisor": {"model": "openai/gpt-4o-mini", "temperature": 0.3},
