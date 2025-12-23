@@ -2,9 +2,17 @@ from typing import TypedDict, List, Optional
 from langgraph.graph import StateGraph, END
 from packages.llm_rag.agents.states import BookState
 
-def plan_outline_node(state: BookState) -> BookState:
-    """Outline Planner Node skeleton."""
-    # Logic to plan outline based on topic, audience, tone
+from packages.llm_rag.src.agents.planner import planner_agent
+
+async def plan_outline_node(state: BookState) -> BookState:
+    """Outline Planner Node implementation."""
+    result = await planner_agent.plan_outline(
+        topic=state.get("topic", "Untitled"),
+        audience=state.get("audience", "General"),
+        tone=state.get("tone", "Professional")
+    )
+    # Update state with generated outline
+    state["outline"] = result["outline"]
     return state
 
 def schedule_chapters_node(state: BookState) -> BookState:
