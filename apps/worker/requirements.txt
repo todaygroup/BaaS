@@ -1,0 +1,5 @@
+pydantic
+pydantic-settings
+httpx
+pytest
+# Worker specific deps

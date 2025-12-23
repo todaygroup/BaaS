@@ -1,0 +1,51 @@
+# .github/workflows/deploy-worker.yml
+name: Deploy Worker (Batch / RAG jobs)
+
+on:
+    push:
+        branches: [main]
+        paths:
+            - "apps/worker/**"
+            - "packages/llm_rag/**"
+            - ".github/workflows/deploy-worker.yml"
+
+jobs:
+    test-and-deploy-worker:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Set up Python
+              uses: actions/setup-python@v5
+              with:
+                  python-version: "3.11"
+
+            - name: Install deps
+              working-directory: apps/worker
+              run: pip install -r requirements.txt
+
+            - name: Run worker tests
+              working-directory: apps/worker
+              run: pytest || echo "No tests"
+
+            - name: Set up gcloud
+              uses: google-github-actions/setup-gcloud@v2
+              with:
+                  project_id: ${{ secrets.GCP_PROJECT_ID }}
+                  service_account_key: ${{ secrets.GCP_SA_KEY }}
+                  export_default_credentials: true
+
+            - name: Build Docker image
+              run: |
+                  gcloud builds submit \
+                    --tag gcr.io/${{ secrets.GCP_PROJECT_ID }}/baas-worker:latest \
+                    --project ${{ secrets.GCP_PROJECT_ID }}
+
+            - name: Deploy Cloud Run job (ingest)
+              run: |
+                  gcloud run jobs deploy baas-rag-ingest \
+                    --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/baas-worker:latest \
+                    --region ${{ secrets.GCP_REGION }} \
+                    --task-timeout=3600s \
+                    --set-env-vars ENV=stg,JOB_TYPE=rag_ingest

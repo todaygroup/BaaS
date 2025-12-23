@@ -1,0 +1,11 @@
+fastapi
+pydantic
+pydantic-settings
+uvicorn
+httpx
+langgraph
+langchain
+langchain-openai
+pytest
+# Link to local packages if needed or install via pip if they have pyproject.toml
+# In this monorepo, we depend on folders being present

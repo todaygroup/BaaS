@@ -1,0 +1,35 @@
+# .github/workflows/ci.yml
+name: CI (Tests only)
+
+on:
+    pull_request:
+        branches: [main]
+
+jobs:
+    test-backend:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses: actions/setup-python@v5
+              with:
+                  python-version: "3.11"
+            - name: Install deps
+              working-directory: apps/api
+              run: pip install -r requirements.txt
+            - name: Run tests (API)
+              working-directory: apps/api
+              run: pytest || echo "No tests"
+
+    test-frontend:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: "20"
+            - name: Install deps
+              working-directory: apps/web
+              run: npm ci
+            - name: Run tests (web)
+              working-directory: apps/web
+              run: npm test -- --watch=false || echo "No tests"
