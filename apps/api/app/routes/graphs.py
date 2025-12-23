@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
-from packages.workflows.book_graph import book_graph
-from packages.workflows.chapter_graph import chapter_graph
+from packages.workflows.src.book_graph import book_graph
+from packages.workflows.src.chapter_graph import chapter_graph
 
 router = APIRouter(prefix="/graphs", tags=["graphs"])
 
