@@ -1,0 +1,14 @@
+[project]
+name = "baas-workflows"
+version = "0.1.0"
+description = "LangGraph workflows for BAAS"
+authors = [{ name = "SEC" }]
+dependencies = [
+    "langgraph>=0.0.10",
+    "baas-llm-rag",
+    "baas-core"
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

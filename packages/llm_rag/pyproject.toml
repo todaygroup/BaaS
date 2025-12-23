@@ -1,0 +1,14 @@
+[project]
+name = "baas-llm-rag"
+version = "0.1.0"
+description = "LLM, RAG, and Agentic layer for BAAS"
+authors = [{ name = "SEC" }]
+dependencies = [
+    "httpx>=0.24.0",
+    "pydantic>=2.0.0",
+    "baas-core"
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

@@ -1,0 +1,10 @@
+[project]
+name = "baas-core"
+version = "0.1.0"
+description = "Core domain models and utilities for BAAS"
+authors = [{ name = "SEC" }]
+dependencies = ["pydantic>=2.0.0"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
